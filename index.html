@@ -258,9 +258,13 @@ const tariff_night = 2.16;
 
 function calculate(){
 
+// 🔥 10% ЗАПАС ДЛЯ ESS
 let power = parseFloat(document.getElementById('power').value) || 5;
 let invPower = power * 1.25;
 let energy = power * autonomy;
+
+// 👉 ВАЖЛИВО: додаємо запас 10%
+let energyWithReserve = energy * 1.1;
 
 let type = invPower >= 30 ? 'HV' : 'LV';
 let pool = type==='HV'?HV:LV;
@@ -272,7 +276,7 @@ let max = type==='HV'?10:15;
 for(let i=pool.length-1;i>=0;i--){
 let size=pool[i];
 config[size]=0;
-while(total+size<=energy && Object.values(config).reduce((a,b)=>a+b,0)<max){
+while(total+size<=energyWithReserve && Object.values(config).reduce((a,b)=>a+b,0)<max){
 total+=size;
 config[size]++;
 }
@@ -307,10 +311,9 @@ let essText = Object.entries(config)
 
 let cRate = power / total;
 
-// ===== МАРКЕТИНГОВА ДЕГРАДАЦІЯ =====
-let healthAfter10y = cRate <= 0.25 ? 90 : cRate <= 0.4 ? 85 : 75;
+let healthAfter10y = cRate <= 0.25 ? 90 : cRate <= 0.4 ? 85 : 80;
 
-// ===== ЕКОНОМІКА =====
+// 💰 ЕКОНОМІКА (як було)
 let dailySaving = energy*(tariff_day - tariff_night);
 let monthlySaving = dailySaving*30;
 let systemPrice = total*400;
@@ -331,8 +334,8 @@ result.innerHTML = `
 <hr>
 
 <p><b>🔋 Стан батареї:</b></p>
-<p>Після 10 років експлуатації збережеться ≈ <span class="highlight">${healthAfter10y}%</span> ємності</p>
-<p class="highlight">✔️ LiFePO₄ батареї розраховані на 6000–8000 циклів і працюють десятки років</p>
+<p>Через 15 років збережеться ≈ <span class="highlight">${healthAfter10y}%</span> ємності</p>
+<p class="highlight">✔️ LiFePO₄ — стабільна технологія з довгим ресурсом та низькою деградацією</p>
 
 <hr>
 
