@@ -1,166 +1,306 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>ESS Powerbox Calculator</title>
+<title>ESS Powerbox Calculator PRO</title>
 
 <style>
+
 body {
-    margin:0;
-    font-family: Arial;
-    background:#020617;
-    color:white;
+margin:0;
+font-family: Arial;
+background:#020617;
+color:white;
+overflow-x:hidden;
 }
 
+/* ===== PREMIUM BACKGROUND ===== */
+.bg{
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at 20% 20%, #00f0ff22, transparent 40%),
+radial-gradient(circle at 80% 70%, #00ffa322, transparent 40%);
+filter: blur(60px);
+animation: float 12s infinite alternate;
+}
+
+@keyframes float{
+from{transform:translate(-20px,-20px);}
+to{transform:translate(20px,20px);}
+}
+
+/* ===== CONTAINER ===== */
 .container {
-    max-width:700px;
-    margin:auto;
-    padding:20px;
+max-width:720px;
+margin:auto;
+padding:20px;
+position:relative;
 }
 
-.step { display:none; }
-.step.active { display:block; }
+/* ===== STEPS ===== */
+.step{display:none; animation:fade .4s ease;}
+.step.active{display:block;}
 
-h2 { margin-bottom:15px; }
+@keyframes fade{
+from{opacity:0; transform:translateY(10px);}
+to{opacity:1; transform:translateY(0);}
+}
 
+/* ===== BUTTONS ===== */
 button {
-    display:block;
-    width:100%;
-    margin:10px 0;
-    padding:14px;
-    border:none;
-    border-radius:10px;
-    background:linear-gradient(90deg,#00f0ff,#00ffa3);
-    font-size:16px;
-    cursor:pointer;
+width:100%;
+margin:10px 0;
+padding:14px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+font-size:15px;
+background:linear-gradient(90deg,#00f0ff,#00ffa3);
+color:#001018;
+transition:.2s;
 }
 
-button:hover { transform:scale(1.03); }
-
-input, select {
-    width:100%;
-    padding:12px;
-    border-radius:8px;
-    border:none;
+button:hover{
+transform:scale(1.02);
 }
 
+/* ===== INPUT ===== */
+input{
+width:100%;
+padding:12px;
+border-radius:10px;
+border:none;
+margin-top:10px;
+}
+
+/* ===== PROGRESS ===== */
 .progress {
-    height:4px;
-    background:#111;
-    margin-bottom:20px;
+height:4px;
+background:#111;
+border-radius:20px;
+overflow:hidden;
+margin-bottom:20px;
 }
 
 .bar {
-    height:4px;
-    width:0%;
-    background:linear-gradient(90deg,#00f0ff,#00ffa3);
-    transition:0.4s;
+height:4px;
+width:0%;
+background:linear-gradient(90deg,#00f0ff,#00ffa3);
+transition:.5s;
 }
 
-/* ЭНЕРГИЯ */
-.energy {
-    height:4px;
-    background:linear-gradient(90deg, transparent, #00f0ff, transparent);
-    animation:flow 2s infinite;
+/* ===== RESULT ===== */
+.result{
+background:rgba(255,255,255,0.05);
+padding:20px;
+border-radius:14px;
+border:1px solid rgba(255,255,255,0.08);
 }
 
-@keyframes flow {
-    from {background-position:-200px;}
-    to {background-position:200px;}
+/* ===== HIGHLIGHT ===== */
+.highlight{
+color:#00ffa3;
+font-weight:bold;
 }
 
-/* ЛАМПА */
-.bulb {
-    width:80px;
-    height:80px;
-    margin:20px auto;
-    border-radius:50%;
-    background:#222;
-    box-shadow:0 0 10px #000;
-    transition:0.5s;
+/* ===== ENERGY ANIMATION ===== */
+.energy-line{
+height:2px;
+background:linear-gradient(90deg,transparent,#00f0ff,transparent);
+animation:flow 2s infinite;
+margin:10px 0;
 }
 
-.bulb.on {
-    background:#fff8c4;
-    box-shadow:0 0 40px #fff176;
+@keyframes flow{
+from{transform:translateX(-100px);}
+to{transform:translateX(100px);}
 }
 
-/* РЕЗУЛЬТАТ */
-.result {
-    background:#0b1220;
-    padding:20px;
-    border-radius:12px;
-    box-shadow:0 0 20px rgba(0,255,200,0.1);
+/* ===== HOUSE ===== */
+.house {
+margin:20px auto;
+width:120px;
+height:90px;
+position:relative;
 }
 
-.highlight {
-    color:#00ffa3;
-    font-weight:bold;
+.roof{
+width:0;height:0;
+border-left:60px solid transparent;
+border-right:60px solid transparent;
+border-bottom:40px solid #00f0ff;
 }
+
+.base{
+width:120px;
+height:60px;
+background:#0b1220;
+border:1px solid #00ffa3;
+position:relative;
+}
+
+.window{
+position:absolute;
+width:12px;
+height:12px;
+background:#111;
+top:15px;
+animation:light 2s infinite;
+}
+
+.window:nth-child(1){left:20px;}
+.window:nth-child(2){left:50px; animation-delay:.4s;}
+.window:nth-child(3){left:80px; animation-delay:.8s;}
+
+@keyframes light{
+0%,100%{background:#111;}
+50%{background:#00ffa3; box-shadow:0 0 10px #00ffa3;}
+}
+
+/* ===== LAMP ===== */
+.lamp {
+font-size:26px;
+text-align:center;
+margin:10px 0;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+0%,100%{opacity:.4;}
+50%{opacity:1; text-shadow:0 0 15px #00ffa3;}
+}
+
+/* ===== ESS CHARGE ===== */
+.battery{
+width:100%;
+height:14px;
+border:1px solid #00f0ff;
+border-radius:20px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.charge{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,#00f0ff,#00ffa3);
+animation:charge 2s infinite alternate;
+}
+
+@keyframes charge{
+from{width:10%;}
+to{width:90%;}
+}
+
+.small-note{
+opacity:0.7;
+font-size:13px;
+margin-top:10px;
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="energy"></div>
+<div class="bg"></div>
 
 <div class="container">
+
+<h2>ESS Powerbox Calculator PRO</h2>
+<div class="energy-line"></div>
 
 <div class="progress"><div class="bar" id="bar"></div></div>
 
 <!-- STEP 1 -->
 <div class="step active">
-<h2>Где используется энергия?</h2>
-<button onclick="next()">Дом</button>
-<button onclick="next()">Бизнес</button>
-<button onclick="next()">Производство</button>
-<button onclick="next()">Арбитраж</button>
+<h3>Де буде працювати система?</h3>
+
+<div class="small-note">💡 Ми підбираємо архітектуру під реальний сценарій використання</div>
+
+<button onclick="next()">🏠 Дім / квартира</button>
+<button onclick="next()">🏢 Бізнес</button>
+<button onclick="next()">🏭 Виробництво</button>
+<button onclick="next()">⚡ Арбітраж</button>
 </div>
 
 <!-- STEP 2 -->
 <div class="step">
-<h2>Пиковая нагрузка (кВт)</h2>
-<input type="number" id="power" placeholder="например 5">
-<p>Мы учитываем не только мощность, но и ресурс оборудования</p>
-<button onclick="next()">Далее</button>
+<h3>Пікове навантаження (кВт)</h3>
+
+<div class="small-note">⚡ Це ключовий параметр для вибору інвертора</div>
+
+<input id="power" type="number" placeholder="Наприклад 5">
+<button onclick="next()">Далі</button>
 </div>
 
 <!-- STEP 3 -->
 <div class="step">
-<h2>Сколько часов автономности нужно?</h2>
-<button onclick="setAuto(3)">2–4 часа</button>
-<button onclick="setAuto(6)">4–8 часов</button>
-<button onclick="setAuto(12)">8–24 часа</button>
-<button onclick="setAuto(24)">24+</button>
+<h3>Бажана автономність</h3>
+
+<div class="small-note">🔋 Чим більше автономність — тим більша система ESS</div>
+
+<button onclick="setAuto(3)">2–4 години</button>
+<button onclick="setAuto(6)">4–8 годин</button>
+<button onclick="setAuto(12)">8–24 години</button>
 </div>
 
-<!-- STEP 4 -->
+<!-- STEP 4 ANALYSIS -->
 <div class="step">
-<h2>Анализируем систему...</h2>
-<p>⚡ Проверяем нагрузку батарей</p>
-<p>⚡ Подбираем архитектуру системы</p>
-<p>⚡ Оптимизируем срок службы</p>
+<h3>Аналіз системи...</h3>
 
-<div class="bulb" id="bulb"></div>
+<div class="small-note">🧠 Інженерний розрахунок у реальному часі</div>
+
+<p>⚡ Підбір інвертора</p>
+<p>🔋 Розрахунок ESS Powerbox</p>
+<p>⚙️ Оптимізація ресурсу (C-rate)</p>
+<p>📊 Формування архітектури системи</p>
+
+<div class="lamp">💡 Система аналізує енергетику об'єкта</div>
+
 </div>
 
 <!-- RESULT -->
 <div class="step">
-<h2>Ваш персональный расчет</h2>
+<h3>Ваш персональний енергетичний проєкт</h3>
+
+<div class="energy-line"></div>
+
+<div class="house">
+<div class="roof"></div>
+<div class="base">
+<div class="window"></div>
+<div class="window"></div>
+<div class="window"></div>
+</div>
+</div>
+
+<div class="lamp">💡 Енергія увімкнена</div>
+
+<div class="battery">
+<div class="charge"></div>
+</div>
 
 <div class="result" id="result"></div>
 
 <br>
 
-<h3>Сколько стоит 1 час без электричества?</h3>
+<h3>Втрати без електроенергії</h3>
 <input type="range" min="200" max="5000" value="500" id="loss">
-<p><span id="lossVal">500</span> грн/час</p>
+<p><b><span id="lossVal">500</span> грн/год</b></p>
+
+<div id="lossCalc"></div>
 
 <br>
 
-<button onclick="sendLead()">Получить точный расчет</button>
+<button onclick="sendLead()">Отримати точний інженерний розрахунок</button>
+
+<p class="small-note">
+TwoDTech — інженерні системи зберігання енергії
+</p>
 
 </div>
 
@@ -175,99 +315,135 @@ const LV=[6,12,15,17.5,33.3];
 const HV=[141,172,193,386];
 
 function next(){
-    document.querySelectorAll('.step')[step].classList.remove('active');
-    step++;
-    document.querySelectorAll('.step')[step].classList.add('active');
 
-    document.getElementById('bar').style.width=(step*25)+'%';
+document.querySelectorAll('.step')[step].classList.remove('active');
+step++;
 
-    if(step===3){
-        setTimeout(()=>{
-            calculate();
-            bulb.classList.add('on');
-            setTimeout(next,1200);
-        },1500);
-    }
+document.querySelectorAll('.step')[step].classList.add('active');
+
+bar.style.width=(step*25)+'%';
+
+if(step===3){
+setTimeout(()=>{
+calculate();
+next();
+},1500);
+}
 }
 
 function setAuto(a){
-    autonomy=a;
-    next();
+autonomy=a;
+next();
 }
 
-loss.oninput=function(){
-    lossVal.innerText=this.value;
-}
+// ===== CALC =====
+const tariff_day = 4.32;
+const tariff_night = 2.16;
 
 function calculate(){
 
-    let power = parseFloat(document.getElementById('power').value) || 5;
+let power = parseFloat(document.getElementById('power').value) || 5;
 
-    let inv = power*1.25;
-    let energy = power*autonomy;
+let inv = power*1.25;
+let energy = power*autonomy;
 
-    let type = energy>100?'HV':'LV';
-    let pool = type==='HV'?HV:LV;
+let type = energy>100?'HV':'LV';
+let pool = type==='HV'?HV:LV;
 
-    let total=0;
-    let config=[];
-    let max = type==='HV'?10:15;
+let total=0;
+let config=[];
+let max=12;
 
-    for(let i=pool.length-1;i>=0;i--){
-        while(total<energy && config.length<max){
-            total+=pool[i];
-            config.push(pool[i]);
-        }
-    }
-
-    let c = power/total;
-    let optimized=false;
-
-    if(c>0.4){
-        total*=1.25;
-        optimized=true;
-    }
-
-    let invType="";
-    if(inv<=10) invType="однофазный";
-    else if(inv<=20) invType="трехфазный";
-    else if(inv<=80) invType="промышленный";
-    else invType="параллельная система";
-
-    result.innerHTML=`
-    <p>Инвертор: <span class="highlight">${inv.toFixed(1)} кВт</span></p>
-    <p>${invType}</p>
-
-    <hr>
-
-    <p>ESS Powerbox: <span class="highlight">${total.toFixed(1)} кВт·ч</span></p>
-    <p>${config.join(" + ")}</p>
-    <p>${type==='HV'?'Высоковольтная':'Низковольтная'} система</p>
-
-    <hr>
-
-    <p><b>Что важно:</b></p>
-
-    ${
-    optimized
-    ? "<p>Мы увеличили емкость системы, чтобы снизить нагрузку на батареи. Это напрямую увеличивает срок службы и надежность.</p>"
-    : "<p>Система уже работает в оптимальном режиме — нагрузка на батареи безопасная и ресурс максимальный.</p>"
-    }
-
-    <p>Нагрузка: ${c.toFixed(2)}C</p>
-
-    <hr>
-
-    <p>⚡ Такой расчет обычно делает инженер вручную.</p>
-    <p>Вы получили его автоматически — с учетом реальных ограничений системы.</p>
-    `;
+for(let i=pool.length-1;i>=0;i--){
+while(total<energy && config.length<max){
+total+=pool[i];
+config.push(pool[i]);
+}
 }
 
-function sendLead(){
-    let power = document.getElementById('power').value || "не указано";
-    let msg = `Хочу расчет ESS Powerbox. Нагрузка: ${power} кВт`;
+let c = power/total;
+let optimized = false;
 
-    window.open(`https://t.me/yourusername?text=${encodeURIComponent(msg)}`);
+if(c>0.4){
+total*=1.2;
+optimized=true;
+}
+
+let inverterText =
+inv<=10 ? `1 інвертор ~${inv.toFixed(1)} кВт (1 фаза)`
+: inv<=20 ? `1 інвертор ~${inv.toFixed(1)} кВт (3 фази)`
+: inv<=80 ? `1 інвертор промисловий`
+: `${Math.ceil(inv/50)} інверторів паралельно`;
+
+// ROI
+let dailySaving = energy*(tariff_day - tariff_night);
+let monthlySaving = dailySaving*30;
+
+let systemPrice = total*400;
+let payback = systemPrice/monthlySaving;
+
+result.innerHTML = `
+<p><b>⚡ Інвертор:</b> <span class="highlight">${inverterText}</span></p>
+
+<p><b>🔋 ESS Powerbox:</b> <span class="highlight">${total.toFixed(1)} кВт·год</span></p>
+
+<p><b>📊 Тип:</b> ${type}</p>
+
+<hr>
+
+<p><b>🧠 Інженерний коментар:</b></p>
+
+${
+optimized
+? "Ми збільшили ємність системи для зниження навантаження. Це напряму підвищує ресурс і стабільність."
+: "Система працює в оптимальному режимі з максимальним ресурсом батарей."
+}
+
+<p><b>📉 C-rate:</b> ${c.toFixed(2)}</p>
+
+<hr>
+
+<p><b>💰 Економіка:</b></p>
+<p>Економія: ~${monthlySaving.toFixed(0)} грн/міс</p>
+<p>Окупність: ~${payback.toFixed(1)} міс</p>
+
+<p class="highlight">
+Система починає окупати себе з першого дня роботи.
+</p>
+`;
+
+}
+
+// LOSS
+loss.oninput=function(){
+lossVal.innerText=this.value;
+
+lossCalc.innerHTML=`
+<p>≈ ${this.value*4} грн/день</p>
+<p>≈ ${this.value*120} грн/місяць</p>
+
+<p class="highlight">
+Це втрата, яка повністю перекривається ESS системою.
+</p>
+`;
+}
+loss.oninput();
+
+// LEAD
+function sendLead(){
+
+let power=document.getElementById('power').value||"не вказано";
+
+let msg=`
+🔋 ESS Powerbox PRO
+
+⚡ Потужність: ${power} кВт
+🔋 Автономність: ${autonomy} год
+
+Запит на інженерний розрахунок
+`;
+
+window.open(`https://t.me/twodtech?text=${encodeURIComponent(msg)}`);
 }
 
 </script>
